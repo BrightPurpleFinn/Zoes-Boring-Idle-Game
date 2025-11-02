@@ -14,6 +14,7 @@ export default function IdleGame() {
       <h1>💰 Simple Gold Counter</h1>
       <h2>Gold: {gold.toFixed(2)} Gold/s: {goldPerSecond}</h2>
       <button onClick={addGold}>Mine Gold</button>
+      <h>THIS IS A FAKE PR TO TEST THE YAML SCRIPT TO AUTO-TEST</h>
       <br/>
       <button onClick={upgradePickaxe}>Level: {pickaxeLevel}<br/>Cost: {pickaxeCost}</button>
       <br/>
