@@ -1,6 +1,7 @@
 // src/components/GoldUI.js
 import React, { useState } from "react";
 import { useGoldStore } from "../stores/goldStore";
+import HoldButton from "./button/holdButton";
 
 export default function GoldUI() {
   const [visible, setVisible] = useState(true);
@@ -35,18 +36,18 @@ export default function GoldUI() {
         <div className="goldUIInternal">
           <h1>💰 Simple Gold Counter</h1>
           <h2>
-                        Gold: {gold.toFixed(2)} | Gold/s: {goldPerSecond.toFixed(2)}
+            Gold: {gold.toFixed(2)} | Gold/s: {goldPerSecond.toFixed(2)}
           </h2>
 
           <div style={{ marginTop: "20px" }}>
-            <button onClick={addGold}>Mine Gold</button>
+            <HoldButton onHold={addGold} interval={333}>Hold to Mine Gold</HoldButton>
             <br />
             <button onClick={upgradePickaxe}>
-                            Pickaxe Lvl: {pickaxeLevel} <br /> Cost: {pickaxeCost}
+              Pickaxe Lvl: {pickaxeLevel} <br /> Cost: {pickaxeCost}
             </button>
             <br />
             <button onClick={upgradeMiner}>
-                            Miner Lvl: {minerLevel} <br /> Cost: {minerCost}
+              Miner Lvl: {minerLevel} <br /> Cost: {minerCost}
             </button>
             <br />
             <button onClick={reset}>RESET</button>

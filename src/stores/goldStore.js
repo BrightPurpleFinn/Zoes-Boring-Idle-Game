@@ -81,7 +81,7 @@ export const useGoldStore = createBaseStore(
     const elapsedSeconds = (now - state.lastAction) / second;
 
     if (elapsedSeconds > 0) {
-      const earned = state.goldPerSecond * elapsedSeconds;
+      const earned = state.goldRateBase() * elapsedSeconds;
       state.gold += earned;
       toast.success(
         `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
