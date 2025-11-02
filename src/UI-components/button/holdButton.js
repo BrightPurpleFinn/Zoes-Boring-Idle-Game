@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 
-function HoldButton({ onHold, interval = 200, children, ...props }) {
+const interval = 333;
+
+function HoldButton({ onHold, children, ...props }) {
   const intervalRef = useRef(null);
 
   const start = () => {

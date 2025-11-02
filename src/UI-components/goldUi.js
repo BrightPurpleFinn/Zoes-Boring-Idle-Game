@@ -40,7 +40,7 @@ export default function GoldUI() {
           </h2>
 
           <div style={{ marginTop: "20px" }}>
-            <HoldButton onHold={mineGold} interval={333}>Hold to Mine Gold</HoldButton>
+            <HoldButton onHold={mineGold}>Hold to Mine Gold</HoldButton>
             <br />
             <button onClick={upgradePickaxe}>
               Pickaxe Lvl: {pickaxeLevel} <br /> Cost: {pickaxeCost}

@@ -78,7 +78,7 @@ export const useGoldStore = createBaseStore(
     const now = Date.now();
     const elapsedSeconds = (now - s.lastAction) / second;
 
-    let earned = 0
+    let earned = 0;
     if (elapsedSeconds > 0) {
       earned = s.goldRateBase() * elapsedSeconds;
       toast.success(
