@@ -13,6 +13,8 @@ const initialState = {
   lastAction: Date.now(),
 };
 
+const second = 1000;
+
 export const useGoldStore = createBaseStore(
   (set, get) => ({
     ...initialState,
@@ -34,21 +36,27 @@ export const useGoldStore = createBaseStore(
       }
     },
     goldRateBase: () => get().minerLevel * 1,
-    minerCostCalc: () =>
+    minerCostCalc: () => {
+      const pow = 0.05;
+      const base = 10;
       set((s) => ({
-        minerCost: Math.trunc(10 ** (1 + 0.05 * s.minerLevel)),
-      })),
-    pickaxeCostCalc: () =>
+        minerCost: Math.trunc(base ** (1 + pow * s.minerLevel)),
+      }));
+    },
+    pickaxeCostCalc: () => {
+      const pow = 0.05;
+      const base = 10;
       set((s) => ({
-        pickaxeCost: Math.trunc(10 ** (1 + 0.05 * s.pickaxeLevel)),
-      })),
+        pickaxeCost: Math.trunc(base ** (1 + pow * s.pickaxeLevel)),
+      }));
+    },
     minerLevelInc: () => set((s) => ({ minerLevel: s.minerLevel + 1 })),
     pickaxeLevelInc: () => set((s) => ({ pickaxeLevel: s.pickaxeLevel + 1 })),
     deductGold: (gold) => set((s) => ({ gold: s.gold - gold })),
     goldPerClickBase: () => get().pickaxeLevel * 1,
     tick: (delta) => {
       const s = get();
-      const seconds = delta / 1000;
+      const seconds = delta / second;
       const goldRate = s.goldRateBase();
       const goldIncrease = goldRate * seconds;
       const goldPerClick = s.goldPerClickBase();
@@ -70,7 +78,7 @@ export const useGoldStore = createBaseStore(
     s.minerCost = s.minerCostCalc(s.minerLevel);
 
     const now = Date.now();
-    const elapsedSeconds = (now - state.lastAction) / 1000;
+    const elapsedSeconds = (now - state.lastAction) / second;
 
     if (elapsedSeconds > 0) {
       const earned = state.goldPerSecond * elapsedSeconds;

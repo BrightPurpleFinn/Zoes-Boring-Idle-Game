@@ -1,5 +1,5 @@
 import { useGoldStore } from "../../../src/stores/goldStore";
-import {encode} from "../../../src/utils/storageUtils"
+import { encode } from "../../../src/utils/storageUtils";
 
 // mock localStorage
 beforeEach(() => {
@@ -39,8 +39,8 @@ test("should rehydrate store from localStorage", () => {
   jest.resetModules();
   const { useGoldStore: reloadedStore } = require("../../../src/stores/goldStore");
   const newStore = reloadedStore.getState();
-  console.log(newStore)
 
-  expect(newStore.gold).toBe(123);
-  expect(newStore.pickaxeLevel).toBe(2);
+  for (const k of Object.keys(fakeData)) {
+    expect(newStore[k]).toEqual(fakeData.state[k]);
+  }
 });

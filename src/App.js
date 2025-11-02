@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import GoldUI from "./UI-components/goldUi";
 import React from "react";
 
-export default function IdleGame() {
+export default function App() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "sans-serif" }}>
