@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useGoldStore } from "./stores/goldStore";
 
-export default function GameLoop() { // allow adjustable FPS
+export default function GameLoop() {
+  const fps = 60;
   const goldStoreTick = useGoldStore((s) => s.tick);
   const lastTimeRef = useRef(performance.now());
   const accumulatorRef = useRef(0);
   const second = 1000;
   const frameDuration = second / fps; // desired ms per tick
-  const fps = 60;
 
   useEffect(() => {
     let frameId;

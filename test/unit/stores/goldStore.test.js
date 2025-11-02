@@ -17,7 +17,7 @@ test("should persist gold amount to localStorage", () => {
   let store = useGoldStore.getState();
 
   expect(store.gold).toBe(0);
-  store.addGold();
+  store.mineGold();
   store = useGoldStore.getState(); // 👈 refresh snapshot
   expect(store.gold).toBeGreaterThan(0);
 

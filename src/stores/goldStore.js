@@ -18,7 +18,8 @@ const second = 1000;
 export const useGoldStore = createBaseStore(
   (set, get) => ({
     ...initialState,
-    addGold: () => set((s) => ({ gold: s.gold + s.goldPerClick })),
+    mineGold: () => set((s) => ({ gold: s.gold + s.goldPerClick })),
+    addGold: (x) => set((s) => ({ gold: s.gold + x })),
     upgradePickaxe: () => {
       const s = get();
       if (s.gold >= s.pickaxeCost) {
@@ -72,23 +73,23 @@ export const useGoldStore = createBaseStore(
   }),
   "goldStore",
   (state) => {
+    if (!state) return;
     const s = state.getState ? state.getState() : state;
-
-    s.pickaxeCost = s.pickaxeCostCalc(s.pickaxeLevel);
-    s.minerCost = s.minerCostCalc(s.minerLevel);
-
     const now = Date.now();
-    const elapsedSeconds = (now - state.lastAction) / second;
+    const elapsedSeconds = (now - s.lastAction) / second;
 
+    let earned = 0;
     if (elapsedSeconds > 0) {
-      const earned = state.goldPerSecond * elapsedSeconds;
-      state.gold += earned;
+      earned = s.goldRateBase() * elapsedSeconds;
       toast.success(
         `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
       );
-    }
+    } 
 
-    state.lastAction = now;
+    s.pickaxeCostCalc(s.pickaxeLevel);
+    s.minerCostCalc(s.minerLevel);
+    s.addGold(earned);
+
   },
   (state) => ({
     gold: state.gold,
