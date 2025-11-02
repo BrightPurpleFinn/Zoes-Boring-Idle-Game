@@ -49,12 +49,13 @@ export const useGoldStore = createBaseStore(
     tick: (delta) => {
       const s = get();
       const seconds = delta / 1000;
-      const goldIncrease = s.goldRateBase() * seconds;
+      const goldRate = s.goldRateBase();
+      const goldIncrease = goldRate * seconds;
       const goldPerClick = s.goldPerClickBase();
 
       set({
         gold: s.gold + goldIncrease,
-        goldPerSecond: s.goldRateFunc(),
+        goldPerSecond: goldRate,
         goldPerClick: goldPerClick,
         lastAction: Date.now(),
       });
