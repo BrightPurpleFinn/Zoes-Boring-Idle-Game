@@ -1,0 +1,84 @@
+// src/stores/gameStore.js
+import toast from "react-hot-toast";
+import { createBaseStore } from "./templateStore";
+
+const initialState = {
+  gold: 0,
+  goldPerClick: 1,
+  goldPerSecond: 0,
+  pickaxeLevel: 1,
+  pickaxeCost: 10,
+  minerLevel: 0,
+  minerCost: 10,
+  lastAction: Date.now(),
+};
+
+export const useGoldStore = createBaseStore(
+  (set, get) => ({
+    ...initialState,
+    addGold: () => set((s) => ({ gold: s.gold + s.goldPerClick })),
+    upgradePickaxe: () => {
+      const s = get();
+      if (s.gold >= s.pickaxeCost) {
+        s.deductGold(s.pickaxeCost);
+        s.pickaxeLevelInc();
+        s.pickaxeCostCalc();
+        set({ goldPerClick: s.pickaxeLevel });
+      }
+    },
+    upgradeMiner: () => {
+      const s = get();
+      if (s.gold >= s.minerCost) {
+        s.deductGold(s.minerCost);
+        s.minerLevelInc();
+        s.goldRateFunc();
+        s.minerCostCalc();
+      }
+    },
+    goldRateFunc: () => get().minerLevel * 1,
+    minerCostCalc: () =>
+      set((s) => ({
+        minerCost: Math.trunc(10 ** (1 + 0.05 * s.minerLevel)),
+      })),
+    pickaxeCostCalc: () =>
+      set((s) => ({
+        pickaxeCost: Math.trunc(10 ** (1 + 0.05 * s.pickaxeLevel)),
+      })),
+    minerLevelInc: () => set((s) => ({ minerLevel: s.minerLevel + 1 })),
+    pickaxeLevelInc: () => set((s) => ({ pickaxeLevel: s.pickaxeLevel + 1 })),
+    deductGold: (gold) => set((s) => ({ gold: s.gold - gold })),
+    tick: (delta) => {
+      const s = get();
+      const seconds = delta / 1000;
+      const goldIncrease = s.goldRateFunc() * seconds;
+
+      set({
+        gold: s.gold + goldIncrease,
+        goldPerSecond: s.goldRateFunc(),
+        lastAction: Date.now(),
+      });
+    },
+    reset: () => set({ ...initialState }),
+  }),
+  "goldStore",
+  (state) => {
+    const s = state.getState ? state.getState() : state;
+
+    s.pickaxeCost = s.pickaxeCostCalc(s.pickaxeLevel);
+    s.minerCost = s.minerCostCalc(s.minerLevel);
+    s.goldPerSecond = s.goldRateFunc();
+
+    const now = Date.now();
+    const elapsedSeconds = (now - state.lastAction) / 1000;
+
+    if (elapsedSeconds > 0) {
+      const earned = state.goldPerSecond * elapsedSeconds;
+      state.gold += earned;
+      toast.success(
+        `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
+      );
+    }
+
+    state.lastAction = now;
+  }
+);

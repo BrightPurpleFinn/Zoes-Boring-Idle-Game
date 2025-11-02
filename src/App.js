@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+// IdleGame.jsx
+import React from "react";
+import { useGoldStore } from "./stores/goldStore";
+import GameLoop from "./gameLoop";
+import { Toaster } from "react-hot-toast";
 
-function App() {
+export default function IdleGame() {
+  const { gold, addGold, pickaxeLevel, pickaxeCost, upgradePickaxe, minerLevel, minerCost, 
+    upgradeMiner, goldPerSecond, reset} = useGoldStore(); 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "sans-serif" }}>
+      <Toaster position="top-right" />
+      <h1>💰 Simple Gold Counter</h1>
+      <h2>Gold: {gold.toFixed(2)} Gold/s: {goldPerSecond}</h2>
+      <button onClick={addGold}>Mine Gold</button>
+      <br/>
+      <button onClick={upgradePickaxe}>Level: {pickaxeLevel}<br/>Cost: {pickaxeCost}</button>
+      <br/>
+      <button onClick={upgradeMiner}>Level: {minerLevel}<br/>Cost: {minerCost}</button>
+      <br/>
+      <button onClick={reset}>RESET</button>
+      <GameLoop />
     </div>
   );
 }
-
-export default App;
