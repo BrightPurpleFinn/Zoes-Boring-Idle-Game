@@ -23,7 +23,6 @@ export const useGoldStore = createBaseStore(
         s.deductGold(s.pickaxeCost);
         s.pickaxeLevelInc();
         s.pickaxeCostCalc();
-        set({ goldPerClick: s.pickaxeLevel });
       }
     },
     upgradeMiner: () => {
@@ -31,11 +30,10 @@ export const useGoldStore = createBaseStore(
       if (s.gold >= s.minerCost) {
         s.deductGold(s.minerCost);
         s.minerLevelInc();
-        s.goldRateFunc();
         s.minerCostCalc();
       }
     },
-    goldRateFunc: () => get().minerLevel * 1,
+    goldRateBase: () => get().minerLevel * 1,
     minerCostCalc: () =>
       set((s) => ({
         minerCost: Math.trunc(10 ** (1 + 0.05 * s.minerLevel)),
@@ -47,14 +45,17 @@ export const useGoldStore = createBaseStore(
     minerLevelInc: () => set((s) => ({ minerLevel: s.minerLevel + 1 })),
     pickaxeLevelInc: () => set((s) => ({ pickaxeLevel: s.pickaxeLevel + 1 })),
     deductGold: (gold) => set((s) => ({ gold: s.gold - gold })),
+    goldPerClickBase: () => get().pickaxeLevel * 1,
     tick: (delta) => {
       const s = get();
       const seconds = delta / 1000;
-      const goldIncrease = s.goldRateFunc() * seconds;
+      const goldIncrease = s.goldRateBase() * seconds;
+      const goldPerClick = s.goldPerClickBase();
 
       set({
         gold: s.gold + goldIncrease,
         goldPerSecond: s.goldRateFunc(),
+        goldPerClick: goldPerClick,
         lastAction: Date.now(),
       });
     },
@@ -66,7 +67,6 @@ export const useGoldStore = createBaseStore(
 
     s.pickaxeCost = s.pickaxeCostCalc(s.pickaxeLevel);
     s.minerCost = s.minerCostCalc(s.minerLevel);
-    s.goldPerSecond = s.goldRateFunc();
 
     const now = Date.now();
     const elapsedSeconds = (now - state.lastAction) / 1000;
@@ -80,5 +80,11 @@ export const useGoldStore = createBaseStore(
     }
 
     state.lastAction = now;
-  }
+  },
+  (state) => ({
+    gold: state.gold,
+    minerLevel: state.minerLevel,
+    pickaxeLevel: state.pickaxeLevel,
+    lastAction: state.lastAction,
+  })
 );
