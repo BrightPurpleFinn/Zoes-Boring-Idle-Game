@@ -7,11 +7,18 @@ on:
 jobs:
   check-store-versions:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # important so we can compare against base branch
+          fetch-depth: 0  
+          ref: ${{ github.head_ref }}  
+
+      - name: Fetch base branch
+        run: |
+          echo "Fetching base branch: ${{ github.base_ref }}"
+          git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
 
       - name: Set up Node
         uses: actions/setup-node@v4
