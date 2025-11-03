@@ -62,12 +62,13 @@ async function run() {
         // Split by dots
         const parts = cleanTag.split(".");
 
+        let version = ""
         if (versions[0] != 0) {
-            const version = `v${versions[0] + parts[0]}.0.0`;
+            version = `v${versions[0] + parts[0]}.0.0`;
         } else if (versions[1] != 0) {
-            const version = `v${parts[0]}.${versions[1] + parts[1]}.0`;
+            version = `v${parts[0]}.${versions[1] + parts[1]}.0`;
         } else {
-            const version = `v${parts[0]}.${parts[1]}.${versions[2] + parts[2]}`;
+            version = `v${parts[0]}.${parts[1]}.${versions[2] + parts[2]}`;
         }
 
         const body = `### New version: ${version}`
