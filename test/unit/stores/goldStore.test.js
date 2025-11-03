@@ -58,3 +58,12 @@ describe('goldStore migrations', () => {
     expect(validState).toEqual(migrated);
   });
 });
+
+describe('goldStore migrations', () => {
+  it('returns the same state when already up to date', async () => {
+    const migrated = migrate(validState, version);
+
+    expect(validState).toEqual(migrated);
+  });
+});
+
