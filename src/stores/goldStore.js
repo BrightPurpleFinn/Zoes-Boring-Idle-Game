@@ -12,6 +12,7 @@ const initialState = {
   minerCost: 10,
   lastAction: Date.now(),
 };
+const fileChange = true;
 
 const second = 1000;
 
