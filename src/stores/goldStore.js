@@ -73,6 +73,7 @@ export const useGoldStore = createBaseStore(
     reset: () => set({ ...initialState }),
   }),
   "goldStore",
+  version = 1,
   (state) => {
     if (!state) return;
     const s = state.getState ? state.getState() : state;

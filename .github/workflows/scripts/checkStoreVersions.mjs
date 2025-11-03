@@ -5,21 +5,13 @@ import fs from 'fs';
 const baseBranch = process.env.GITHUB_BASE_REF || 'origin/main';
 
 // Get changed files in the PR
-const changedFiles = execSync(`git diff --name-only ${baseBranch}...HEAD`, { encoding: 'utf8' })
+const changedFiles = execSync(`git diff --name-only ${baseBranch}...HEAD -- src/stores/`, { encoding: 'utf8' })
   .split('\n')
-  .filter((f) => f && f.includes('store'));
+  .filter(Boolean);
 
-console.log(execSync(`git diff --name-only ${baseBranch}...HEAD`, { encoding: 'utf8' }))
-console.log(baseBranch)
+console.log(changedFiles)
 
-try {
-  const diffOutput = execSync(`git diff --name-only ${baseBranch}...HEAD`, { encoding: 'utf8' });
-  console.log('Changed files:\n', diffOutput);
-} catch (e) {
-  console.error('Git diff failed:', e.message);
-}
-
-const versionRegex = /version\s*:\s*(\d+)/;
+const versionRegex = /^version\s*=\s*\d+,?$/;
 let failed = false;
 
 for (const file of changedFiles) {
@@ -29,9 +21,10 @@ for (const file of changedFiles) {
 
     const newMatch = newContent.match(versionRegex);
     const oldMatch = oldContent.match(versionRegex);
-
+    console.log("help")
+    console.log(newMatch)
     if (!newMatch) continue;
-
+console.log("help")
     const newVersion = parseInt(newMatch[1]);
     const oldVersion = oldMatch ? parseInt(oldMatch[1]) : undefined;
 
@@ -41,6 +34,7 @@ for (const file of changedFiles) {
     }
   } catch (e) {
     // probably a new file; skip
+    console.log('e')
   }
 }
 
