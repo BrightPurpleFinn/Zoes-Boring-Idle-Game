@@ -2,6 +2,11 @@ name: Run Linter
 
 on:
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number'
+        required: true
+        type: number
   pull_request:
     branches: 
       - main

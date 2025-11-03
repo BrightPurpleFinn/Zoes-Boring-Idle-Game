@@ -2,6 +2,11 @@ name: Run Jest Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number'
+        required: true
+        type: number
   push:
     branches: main
   pull_request:
