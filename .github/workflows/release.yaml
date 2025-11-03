@@ -18,7 +18,7 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm test
-
+      
   release:
     runs-on: ubuntu-latest
     name: Semantic Release
