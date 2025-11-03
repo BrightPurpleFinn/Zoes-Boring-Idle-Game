@@ -10,5 +10,11 @@ module.exports = {
     "<rootDir>/test/**/__tests__/**/*.{js,jsx}",
     "<rootDir>/test/**/*.{spec,test}.{js,jsx}",
   ],
-  collectCoverageFrom: ["src/**/*.{js,jsx}", "!src/index.js"],
+    "collectCoverageFrom": [
+    "src/**/*.{js,jsx,ts,tsx}",   
+    "!src/**/*.d.ts",
+    "!src/reportWebVitals.js",
+    "!src/**/index.{js,ts}",
+    "!src/**/__tests__/**"  
+  ]
 };
