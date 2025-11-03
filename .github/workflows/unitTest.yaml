@@ -2,10 +2,11 @@ name: Run Jest Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: main
   pull_request:
-    branches: [ main, release ]
-
+    branches:
+      - main
+      - release
 jobs:
   test:
     runs-on: ubuntu-latest
