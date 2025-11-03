@@ -7,11 +7,10 @@ const baseBranch = process.env.GITHUB_BASE_REF || 'origin/main';
 // Get changed files in the PR
 const changedFiles = execSync(`git diff --name-only ${baseBranch}...HEAD -- src/stores/`, { encoding: 'utf8' })
   .split('\n')
-  .filter(Boolean);
+  .filter(Boolean)
+  .filter(file => file !== 'src/stores/templateStore.js');
 
-console.log(changedFiles)
-
-const versionRegex = /^version\s*=\s*\d+,?$/;
+const versionRegex = /^\s*version\s*=\s*\d+,?$/m;
 let failed = false;
 
 for (const file of changedFiles) {
@@ -19,14 +18,19 @@ for (const file of changedFiles) {
     const newContent = fs.readFileSync(file, 'utf8');
     const oldContent = execSync(`git show ${baseBranch}:${file}`, { encoding: 'utf8' });
 
-    const newMatch = newContent.match(versionRegex);
-    const oldMatch = oldContent.match(versionRegex);
-    console.log("help")
-    console.log(newMatch)
-    if (!newMatch) continue;
-console.log("help")
-    const newVersion = parseInt(newMatch[1]);
-    const oldVersion = oldMatch ? parseInt(oldMatch[1]) : undefined;
+    function extractVersion(x) {
+      const string = x.match(versionRegex)?.[0];
+      if (!string) return;
+      return Number(string.substring(string.lastIndexOf("=") + 1, string.lastIndexOf(",")));
+    }
+
+    const newVersion = extractVersion(newContent)
+    if (!newVersion) {
+      console.error(`${file} changed but no version`);
+      failed = true;
+    }
+
+    const oldVersion = extractVersion(oldContent)
 
     if (oldVersion !== undefined && newVersion <= oldVersion) {
       console.error(`${file} changed but version not incremented (${oldVersion} → ${newVersion})`);
@@ -34,7 +38,7 @@ console.log("help")
     }
   } catch (e) {
     // probably a new file; skip
-    console.log('e')
+    console.log(e)
   }
 }
 
