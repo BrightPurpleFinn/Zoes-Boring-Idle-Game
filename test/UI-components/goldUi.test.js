@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import App from "../../../src/App";
+import App from "../../src/App";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 
