@@ -27,4 +27,4 @@ jobs:
       - name: Run commit analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node .github/scripts/analyze_commits.js
+        run: node .github/scripts/prEstimation.js
