@@ -71,8 +71,7 @@ export const useGoldStore = createBaseStore(
     },
     reset: () => set({ ...initialState }),
   }),
-  "goldStore",
-  { version: 1 },
+  name,
   (state) => {
     if (!state) return;
     const s = state.getState ? state.getState() : state;
@@ -92,10 +91,22 @@ export const useGoldStore = createBaseStore(
     }, 0);
 
   },
-  (state) => ({
+  partialize,
+  migrate
+);
+
+const name = "goldStore";
+const version = 1;
+
+function migrate(persistedState, version) {
+
+}
+
+function partialize(state) {
+  return {
     gold: state.gold,
     minerLevel: state.minerLevel,
     pickaxeLevel: state.pickaxeLevel,
     lastAction: state.lastAction,
-  })
-);
+  }
+}

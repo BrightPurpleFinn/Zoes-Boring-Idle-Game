@@ -11,7 +11,7 @@ const changedFiles = execSync(`git diff --name-only ${baseBranch}...HEAD -- src/
   .filter(Boolean)
   .filter(file => file !== 'src/stores/templateStore.js');
 
-const versionRegex = /^\s*\{\s*version\s*:\s*\d+\s*\},?$/m;
+const versionRegex = /^.*version = \d;/m
 let failed = false;
 
 for (const file of changedFiles) {
@@ -20,7 +20,9 @@ for (const file of changedFiles) {
     const oldContent = execSync(`git show ${baseBranch}:${file}`, { encoding: 'utf8' });
 
     function extractVersion(x) {
+      console.log(x)
       const string = x.match(versionRegex)?.[0];
+      console.log(string)
       if (!string) return;
       return Number(string.substring(string.lastIndexOf(":") + 1, string.lastIndexOf("}")));
     }
