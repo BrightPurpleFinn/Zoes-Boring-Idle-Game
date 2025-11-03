@@ -60,7 +60,10 @@ async function run() {
         const cleanTag = latestTag.startsWith("v") ? latestTag.slice(1) : latestTag;
 
         // Split by dots
-        const parts = cleanTag.split(".");
+        let parts = cleanTag.split(".");
+
+        versions = versions.map(Number);
+        parts = parts.map(Number);
 
         let version = ""
         if (versions[0] != 0) {
