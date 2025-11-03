@@ -14,7 +14,7 @@ module.exports = {
     "src/**/*.{js,jsx,ts,tsx}",   
     "!src/**/*.d.ts",
     "!src/reportWebVitals.js",
-    "!src//stores/templateStore.js",
+    "!src/stores/templateStore.js",
     "!src/**/index.{js,ts}",
     "!src/**/__tests__/**"
   ]
