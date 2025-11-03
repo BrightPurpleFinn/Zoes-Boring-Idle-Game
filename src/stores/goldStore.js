@@ -100,7 +100,7 @@ function rehydrateHandler(state) {
   }, 0);
 }
 
-function partialize(state) {
+export function partialize(state) {
   return {
     gold: state.gold,
     minerLevel: state.minerLevel,
