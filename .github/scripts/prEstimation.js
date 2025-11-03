@@ -28,7 +28,7 @@ async function run() {
         core.info(`Found ${messages.length} commit messages`);
 
         // Analyze messages
-        const versions = [0, 0, 0];
+        let versions = [0, 0, 0];
         for (const msg of messages) {
             if (/fix/i.test(msg)) {
                 versions[2] += 1
