@@ -1,4 +1,4 @@
-import { useGoldStore } from "../../../src/stores/goldStore";
+import { useGoldStore, migrate, version } from "../../../src/stores/goldStore";
 import { encode } from "../../../src/utils/storageUtils";
 
 // mock localStorage
@@ -43,4 +43,17 @@ test("should rehydrate store from localStorage", () => {
   for (const k of Object.keys(fakeData)) {
     expect(newStore[k]).toEqual(fakeData.state[k]);
   }
+});
+
+describe('goldStore migrations', () => {
+  it('returns the same state when already up to date', async () => {
+    const currentState = {
+      state: { gold: 123, pickaxeLevel: 2, minerLevel: 3, lastAction: Date.now() },
+      version: 0,
+    };
+
+    const migrated = migrate(currentState, version);
+
+    expect(currentState).toEqual(migrated);
+  });
 });

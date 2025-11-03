@@ -16,7 +16,7 @@ const initialState = {
 const second = 1000;
 
 const name = "goldStore";
-const version = 1;
+export const version = 1;
 
 function config(set, get) {
   return {
@@ -76,8 +76,9 @@ function config(set, get) {
   }
 }
 
-function migrate(persistedState, version) {
-
+export function migrate(persistedState, persistedVersion) {
+  if (persistedVersion == 0) persistedVersion++;
+  return persistedState;
 }
 
 function rehydrateHandler(state) {
