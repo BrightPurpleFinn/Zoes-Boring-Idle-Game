@@ -21,7 +21,7 @@ for (const file of changedFiles) {
     function extractVersion(x) {
       const string = x.match(versionRegex)?.[0];
       if (!string) return;
-      return Number(string.substring(string.lastIndexOf("=") + 1, string.lastIndexOf(",")));
+      return Number(string.substring(string.lastIndexOf(":") + 1, string.lastIndexOf("}")));
     }
 
     const newVersion = extractVersion(newContent)
