@@ -19,7 +19,7 @@ export function createBaseStore(config, name, version, rehydrateHandler, partial
       }),
       {
         name,
-        version: version.version,
+        version: version,
         migrate: migrate,
         storage: base64Storage,
         partialize:

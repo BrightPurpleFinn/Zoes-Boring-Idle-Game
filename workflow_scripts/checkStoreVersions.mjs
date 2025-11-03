@@ -20,11 +20,9 @@ for (const file of changedFiles) {
     const oldContent = execSync(`git show ${baseBranch}:${file}`, { encoding: 'utf8' });
 
     function extractVersion(x) {
-      console.log(x)
       const string = x.match(versionRegex)?.[0];
-      console.log(string)
       if (!string) return;
-      return Number(string.substring(string.lastIndexOf(":") + 1, string.lastIndexOf("}")));
+      return Number(string.substring(string.lastIndexOf("=") + 1, string.lastIndexOf(";")));
     }
 
     const newVersion = extractVersion(newContent)
@@ -41,7 +39,6 @@ for (const file of changedFiles) {
     }
   } catch (e) {
     // probably a new file; skip
-    console.log(e)
   }
 }
 
