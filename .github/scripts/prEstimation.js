@@ -28,20 +28,49 @@ async function run() {
         core.info(`Found ${messages.length} commit messages`);
 
         // Analyze messages
-        const warnings = [];
+        const versions = [0, 0, 0];
         for (const msg of messages) {
-            if (/feat/i.test(msg)) {
-                warnings.push("⚠️ Found a commit marked as 'WIP'. Consider squashing or cleaning up.");
-            }
             if (/fix/i.test(msg)) {
-                warnings.push("🔧 Detected a 'fix' commit — ensure it's linked to an issue.");
+                versions[2] += 1
+            }
+            if (/feat/i.test(msg)) {
+                versions[1] += 1
+            }
+            if (/major/i.test(msg)) {
+                versions[0] += 1
             }
         }
 
-        const body = [
-            "### 🕵️ Commit Analysis Report",
-            ...warnings.map(w => `- ${w}`),
-        ].join("\n");
+        // Fetch the most recent tag (by creation order)
+        const { data: tags } = await octokit.rest.repos.listTags({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            per_page: 1, // just get the latest
+        });
+
+        let latestTag = null;
+        if (tags.length > 0) {
+            latestTag = tags[0].name;
+            core.info(`Latest tag found: ${latestTag}`);
+        } else {
+            core.info("No tags found in this repository.");
+        }
+
+        // Remove the "v" prefix (optional)
+        const cleanTag = latestTag.startsWith("v") ? latestTag.slice(1) : latestTag;
+
+        // Split by dots
+        const parts = cleanTag.split(".");
+
+        if (versions[0] != 0) {
+            const version = `v${versions[0] + parts[0]}.0.0`;
+        } else if (versions[1] != 0) {
+            const version = `v${parts[0]}.${versions[1] + parts[1]}.0`;
+        } else {
+            const version = `v${parts[0]}.${parts[1]}.${versions[2] + parts[2]}`;
+        }
+
+        const body = `### New version: ${version}`
 
         await octokit.rest.issues.createComment({
             owner: context.repo.owner,
