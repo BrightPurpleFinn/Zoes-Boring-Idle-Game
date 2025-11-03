@@ -22,4 +22,4 @@ jobs:
         run: npm ci
 
       - name: Run store version check
-        run: node workflow_scripts/checkStoreVersions.js
+        run: node workflow_scripts/checkStoreVersions.mjs
