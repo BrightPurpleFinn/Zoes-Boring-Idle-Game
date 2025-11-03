@@ -22,4 +22,4 @@ jobs:
         run: npm ci
 
       - name: Run store version check
-        run: node scripts/checkStoreVersions.js
+        run: node /.github/workflows/scripts/checkStoreVersions.js
