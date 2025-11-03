@@ -16,8 +16,8 @@ beforeEach(() => {
 const validState = { gold: 123, pickaxeLevel: 2, minerLevel: 3, lastAction: Date.now() };
 
 test("validState is valid", () => {
-  const partializedData = partialize(validState)
-  expect(partializedData).toStrictEqual(validState)
+  const partializedData = partialize(validState);
+  expect(partializedData).toStrictEqual(validState);
 });
 
 test("should persist gold amount to localStorage", () => {

@@ -73,7 +73,7 @@ function config(set, get) {
       });
     },
     reset: () => set({ ...initialState }),
-  }
+  };
 }
 
 export function migrate(persistedState, persistedVersion) {
@@ -106,7 +106,7 @@ export function partialize(state) {
     minerLevel: state.minerLevel,
     pickaxeLevel: state.pickaxeLevel,
     lastAction: state.lastAction,
-  }
+  };
 }
 
 export const useGoldStore = createBaseStore(
