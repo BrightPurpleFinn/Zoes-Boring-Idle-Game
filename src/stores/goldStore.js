@@ -72,24 +72,24 @@ export const useGoldStore = createBaseStore(
     reset: () => set({ ...initialState }),
   }),
   "goldStore",
-  version = 1,
+  { version: 1 },
   (state) => {
     if (!state) return;
     const s = state.getState ? state.getState() : state;
     const now = Date.now();
     const elapsedSeconds = (now - s.lastAction) / second;
+    const earned = s.goldRateBase() * elapsedSeconds;
 
-    let earned = 0;
-    if (elapsedSeconds > 0) {
-      earned = s.goldRateBase() * elapsedSeconds;
-      toast.success(
-        `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
-      );
-    } 
-
-    s.pickaxeCostCalc(s.pickaxeLevel);
-    s.minerCostCalc(s.minerLevel);
-    s.addGold(earned);
+    setTimeout(() => {
+      if (elapsedSeconds > 0) {
+        toast.success(
+          `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
+        );
+      }
+      s.pickaxeCostCalc(s.pickaxeLevel);
+      s.minerCostCalc(s.minerLevel);
+      s.addGold(earned);
+    }, 0);
 
   },
   (state) => ({

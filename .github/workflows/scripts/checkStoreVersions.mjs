@@ -10,7 +10,7 @@ const changedFiles = execSync(`git diff --name-only ${baseBranch}...HEAD -- src/
   .filter(Boolean)
   .filter(file => file !== 'src/stores/templateStore.js');
 
-const versionRegex = /^\s*version\s*=\s*\d+,?$/m;
+const versionRegex = /^\s*\{\s*version\s*:\s*\d+\s*\},?$/m;
 let failed = false;
 
 for (const file of changedFiles) {

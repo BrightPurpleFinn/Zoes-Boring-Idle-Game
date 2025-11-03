@@ -11,7 +11,7 @@ import { base64Storage } from "../utils/storageUtils";
  * @param {Function} [rehydrateHandler] - Optional function run on rehydrate
  * @param {Function} [partialize] - Optional function for selective persistence
  */
-export function createBaseStore(config, name, rehydrateHandler, partialize, version) {
+export function createBaseStore(config, name, version, rehydrateHandler, partialize) {
   return create(
     persist(
       (set, get) => ({
@@ -19,7 +19,7 @@ export function createBaseStore(config, name, rehydrateHandler, partialize, vers
       }),
       {
         name,
-        version: version,
+        version: version.version,
         storage: base64Storage,
         partialize:
           partialize ||
