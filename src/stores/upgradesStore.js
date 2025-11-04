@@ -61,6 +61,7 @@ function config(set, get) {
         return s.availableUpgrades.includes(x.index);
       });
     },
+    setAvailableUpgrades: (x) => set((s) => ({ availableUpgrades: x})),
     isUpgradeActivated: (index) => {
       const s = get();
       return s.broughtUpgrades.includes(index);
@@ -77,11 +78,14 @@ export function migrate(persistedState, persistedVersion) {
 function rehydrateHandler(state) {
   if (!state) return;
   const s = state.getState ? state.getState() : state;
-  console.log(`rehydration: ${s}`);
+  const availableUpgrades = upgrades.map((x) => {return x.index;}).filter((x) => !s.broughtUpgrades.includes(x))
+  s.setAvailableUpgrades(availableUpgrades);
 }
 
 export function partialize(state) {
-  return state;
+    return {
+    broughtUpgrades: state.broughtUpgrades
+  };
 }
 
 export const useUpgradeStore = createBaseStore(
