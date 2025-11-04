@@ -1,6 +1,7 @@
 // src/stores/gameStore.js
 import toast from "react-hot-toast";
 import { createBaseStore } from "./templateStore";
+import upgrades from "./jsons/upgrades.json"
 
 const initialState = {
   gold: 0,
@@ -11,7 +12,11 @@ const initialState = {
   minerLevel: 0,
   minerCost: 10,
   lastAction: Date.now(),
+  upgrades: upgrades,
+  upgradesUnlocked: []
 };
+
+console.log(upgrades)
 
 const second = 1000;
 

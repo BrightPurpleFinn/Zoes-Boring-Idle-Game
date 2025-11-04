@@ -16,6 +16,7 @@ export default function GoldUI() {
     minerCost,
     upgradeMiner,
     reset,
+    upgrades
   } = useGoldStore();
 
   return (
