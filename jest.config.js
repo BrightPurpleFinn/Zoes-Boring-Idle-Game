@@ -3,6 +3,9 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/test/setupTests.js"],
   moduleFileExtensions: ["js", "jsx", "json", "node"],
   moduleDirectories: ["node_modules", "src"],
+  moduleNameMapper: {
+    '^.+\\.(css|less)$': '<rootDir>/CSSStub.js'
+  },
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
   },
