@@ -1,7 +1,7 @@
 // src/stores/baseStore.js
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { base64Storage } from "../utils/storageUtils";
+import { base64Storage } from "./../utils/storageUtils.js";
 
 /**
  * A reusable factory for creating persisted Zustand stores.
@@ -11,7 +11,7 @@ import { base64Storage } from "../utils/storageUtils";
  * @param {Function} [rehydrateHandler] - Optional function run on rehydrate
  * @param {Function} [partialize] - Optional function for selective persistence
  */
-export function createBaseStore(config, name, rehydrateHandler, partialize) {
+export function createBaseStore(config, name, version, rehydrateHandler, partialize, migrate) {
   return create(
     persist(
       (set, get) => ({
@@ -19,6 +19,8 @@ export function createBaseStore(config, name, rehydrateHandler, partialize) {
       }),
       {
         name,
+        version: version,
+        migrate: migrate,
         storage: base64Storage,
         partialize:
           partialize ||

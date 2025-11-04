@@ -35,7 +35,6 @@ export default defineConfig([
       "no-var": "error", 
       "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
       "no-duplicate-imports": "error",
-      "no-magic-numbers": ["error", { "ignore": [0, 1, -1, 2] }],
       "no-duplicate-imports": "error",
     },
   },

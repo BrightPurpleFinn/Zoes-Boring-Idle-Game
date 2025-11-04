@@ -1,6 +1,7 @@
 // src/stores/gameStore.js
 import toast from "react-hot-toast";
 import { createBaseStore } from "./templateStore";
+import { useUpgradeStore } from "./upgradesStore";
 
 const initialState = {
   gold: 0,
@@ -11,12 +12,16 @@ const initialState = {
   minerLevel: 0,
   minerCost: 10,
   lastAction: Date.now(),
+  goldUpgrades: []
 };
 
 const second = 1000;
 
-export const useGoldStore = createBaseStore(
-  (set, get) => ({
+const name = "goldStore";
+export const version = 1;
+
+function config(set, get) {
+  return {
     ...initialState,
     mineGold: () => set((s) => ({ gold: s.gold + s.goldPerClick })),
     addGold: (x) => set((s) => ({ gold: s.gold + x })),
@@ -58,9 +63,15 @@ export const useGoldStore = createBaseStore(
     tick: (delta) => {
       const s = get();
       const seconds = delta / second;
-      const goldRate = s.goldRateBase();
-      const goldIncrease = goldRate * seconds;
       const goldPerClick = s.goldPerClickBase();
+
+      const {isUpgradeActivated} = useUpgradeStore.getState();
+
+      const goldRateBase = s.goldRateBase();
+      const goldRateMulti = isUpgradeActivated(0) ? 2 : 1;
+      const goldRatePower = isUpgradeActivated(1) ? 2 : 1;
+      const goldRate = (goldRateBase * goldRateMulti) ** goldRatePower;
+      const goldIncrease = goldRate * seconds;
 
       set({
         gold: s.gold + goldIncrease,
@@ -70,31 +81,47 @@ export const useGoldStore = createBaseStore(
       });
     },
     reset: () => set({ ...initialState }),
-  }),
-  "goldStore",
-  (state) => {
-    if (!state) return;
-    const s = state.getState ? state.getState() : state;
-    const now = Date.now();
-    const elapsedSeconds = (now - s.lastAction) / second;
+  };
+}
 
-    let earned = 0;
+export function migrate(persistedState, persistedVersion) {
+  if (persistedVersion == 0) persistedVersion++;
+  return persistedState;
+}
+
+function rehydrateHandler(state) {
+  if (!state) return;
+  const s = state.getState ? state.getState() : state;
+  const now = Date.now();
+  const elapsedSeconds = (now - s.lastAction) / second;
+  const earned = s.goldRateBase() * elapsedSeconds;
+
+  setTimeout(() => {
     if (elapsedSeconds > 0) {
-      earned = s.goldRateBase() * elapsedSeconds;
       toast.success(
         `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
       );
-    } 
-
+    }
     s.pickaxeCostCalc(s.pickaxeLevel);
     s.minerCostCalc(s.minerLevel);
     s.addGold(earned);
+  }, 0);
+}
 
-  },
-  (state) => ({
+export function partialize(state) {
+  return {
     gold: state.gold,
     minerLevel: state.minerLevel,
     pickaxeLevel: state.pickaxeLevel,
     lastAction: state.lastAction,
-  })
+  };
+}
+
+export const useGoldStore = createBaseStore(
+  config,
+  name,
+  version,
+  rehydrateHandler,
+  partialize,
+  migrate
 );

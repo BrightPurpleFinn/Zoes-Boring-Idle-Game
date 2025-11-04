@@ -2,7 +2,12 @@ import React, { useRef } from 'react';
 
 const interval = 333;
 
-function HoldButton({ onHold, children, ...props }) {
+/**
+ * @param {function} onHold - Function to execute when button is held
+ * @param {string} className - Classname for Div of button
+ * @returns {} HoldButton
+ */
+function HoldButton({ onHold, className, children, ...props }) {
   const intervalRef = useRef(null);
 
   const start = () => {
@@ -15,16 +20,18 @@ function HoldButton({ onHold, children, ...props }) {
   };
 
   return (
-    <button
-      onMouseDown={start}
-      onMouseUp={stop}
-      onMouseLeave={stop}
-      onTouchStart={start}
-      onTouchEnd={stop}
-      {...props}
-    >
-      {children}
-    </button>
+    <div className={className}>
+      <button className='HoldButton'
+        onMouseDown={start}
+        onMouseUp={stop}
+        onMouseLeave={stop}
+        onTouchStart={start}
+        onTouchEnd={stop}
+        {...props}
+      >
+        {children}
+      </button>
+    </div>
   );
 }
 
