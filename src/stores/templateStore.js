@@ -1,7 +1,7 @@
 // src/stores/baseStore.js
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { base64Storage } from "../utils/storageUtils";
+import { base64Storage } from "./../utils/storageUtils.js";
 
 /**
  * A reusable factory for creating persisted Zustand stores.
