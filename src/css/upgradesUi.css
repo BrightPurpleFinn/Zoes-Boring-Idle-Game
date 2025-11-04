@@ -1,0 +1,115 @@
+.upgrade-button-container {
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.upgrade-button-body {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.description {
+  display: none;
+}
+
+.upgrade-button-info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #222;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow: hidden;
+  /* protect against overflow from long content */
+}
+
+.upgrade-button-button {
+  aspect-ratio: 1/1;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.upgrade-button-info>div {
+  font-size: 13px;
+  color: #555;
+}
+
+.upgrade-button-info .description {
+  color: #666;
+  font-size: 13px;
+}
+
+.upgrade-button-info:hover>.description {
+  display: block;
+}
+
+.upgrade-button-button:hover,
+.upgrade-button-button:focus {
+  background: #005ec8;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12);
+}
+
+.upgrades-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .description {
+    display: block;
+  }
+
+  .upgrades-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+
+  .upgrade-button-info {
+    font-size: 13px;
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    /* stack children vertically */
+    height: 100%;
+  }
+
+  .upgrade-button-container {
+    display: grid;
+    overflow: hidden;
+    padding: 5px;
+    gap: 10px;
+  }
+
+  .upgrade-button-header {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .upgrade-button-body {
+    display: flex;
+    flex-direction: row;
+    /* stack items vertically */
+    height: 100%;
+    /* make it fill its container */
+  }
+}

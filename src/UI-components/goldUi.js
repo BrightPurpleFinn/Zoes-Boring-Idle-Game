@@ -14,9 +14,7 @@ export default function GoldUI() {
     upgradePickaxe,
     minerLevel,
     minerCost,
-    upgradeMiner,
-    reset,
-    upgrades
+    upgradeMiner
   } = useGoldStore();
 
   return (
@@ -51,7 +49,6 @@ export default function GoldUI() {
               Miner Lvl: {minerLevel} <br /> Cost: {minerCost}
             </button>
             <br />
-            <button onClick={reset}>RESET</button>
           </div>
         </div>
       )}

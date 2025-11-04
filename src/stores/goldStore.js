@@ -1,7 +1,7 @@
 // src/stores/gameStore.js
 import toast from "react-hot-toast";
 import { createBaseStore } from "./templateStore";
-import upgrades from "./jsons/upgrades.json"
+import { useUpgradeStore } from "./upgradesStore";
 
 const initialState = {
   gold: 0,
@@ -12,11 +12,8 @@ const initialState = {
   minerLevel: 0,
   minerCost: 10,
   lastAction: Date.now(),
-  upgrades: upgrades,
-  upgradesUnlocked: []
+  goldUpgrades: []
 };
-
-console.log(upgrades)
 
 const second = 1000;
 
@@ -66,9 +63,15 @@ function config(set, get) {
     tick: (delta) => {
       const s = get();
       const seconds = delta / second;
-      const goldRate = s.goldRateBase();
-      const goldIncrease = goldRate * seconds;
       const goldPerClick = s.goldPerClickBase();
+
+      const {isUpgradeActivated} = useUpgradeStore.getState();
+
+      const goldRateBase = s.goldRateBase();
+      const goldRateMulti = isUpgradeActivated(0) ? 2 : 1;
+      const goldRatePower = isUpgradeActivated(1) ? 2 : 1;
+      const goldRate = (goldRateBase * goldRateMulti) ** goldRatePower;
+      const goldIncrease = goldRate * seconds;
 
       set({
         gold: s.gold + goldIncrease,
