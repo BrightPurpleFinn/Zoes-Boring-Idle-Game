@@ -5,15 +5,6 @@ import { useGoldStore } from "./goldStore.js";
 const name = "upgradeStore";
 export const version = 1;
 
-/**
- * Array of upgrades as tuples:
- * [0] string: name of the upgrade
- * [1] string: upgrade description
- * [2] array: [[currency, cost]]
- * [3] number[]: quantities of currencies required
- * [4] number: index
- * @type {Array<[string, string[], number[], (x: any) => void]>}
- */
 const upgrades = newUpgrades([
   // name, description, [[currency, cost]], REDUNDNET?, index
   ["Big Upgrade no. One!", "Doubles your gold per second", [["Gold", 100]], ["gold"], 0],
