@@ -41,8 +41,10 @@ function config(set, get) {
       if (s.broughtUpgrades.includes(index)) {
         throw Error(`Upgrade ${index} already present in broughtUpgrades`);
       }
-      set({ broughtUpgrades: [...s.broughtUpgrades, index] });
-      set({ availableUpgrades: s.availableUpgrades.filter(x => { return x != index; }) });
+      set({
+        broughtUpgrades: [...s.broughtUpgrades, index],
+        availableUpgrades: s.availableUpgrades.filter(x => { return x != index; })
+      });
     },
     getAvailableUpgrades: () => {
       const s = get();
@@ -67,8 +69,8 @@ function rehydrateHandler(state) {
   console.log(`rehydration: ${s}`);
 }
 
-export function partialize({broughtUpgrades}) {
-  return {broughtUpgrades};
+export function partialize({ broughtUpgrades }) {
+  return { broughtUpgrades };
 }
 
 export const useUpgradeStore = createBaseStore(
