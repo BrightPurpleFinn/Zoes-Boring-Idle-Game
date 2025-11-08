@@ -4,8 +4,8 @@ let failed = false;
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
 const targetBranch = JSON.parse(readFileSync(eventPath, 'utf-8')).pull_request.base.ref;
-const logReleasePath = "../changelogs/logRelease.json";
-const logPath = "../changelogs/log.json"
+const logReleasePath = "changelogs/logRelease.json";
+const logPath = "changelogs/log.json"
 
 switch(targetBranch) {
   case "main":
@@ -24,8 +24,8 @@ if (failed) {
 
 function releaseChecks() {
   if (!existsSync(logReleasePath)) {
-    console.log(readdirSync(import.meta.dirname))
-    console.error("No Realease change log file");
+    console.log(import.meta.dirname)
+    console.error("No Release change log file");
     failed = true;
   } 
 }
