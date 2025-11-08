@@ -1,12 +1,2 @@
 [
-    {
-        "releaseName": "ReleaseName",
-        "version": "0.2.3",
-        "date": "16/12/2025",
-        "patches": {
-            "fix": ["FIX NUM ONE", "FIX NUM TWO"],
-            "minor": ["MINOR NUM ONE"],
-            "major": ["MAJOR NUM ONE", "MAJOR NUM TWO", "MAJOR NUM THREE"]
-        }
-    }
 ]
