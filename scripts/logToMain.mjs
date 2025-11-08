@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync, unlinkSync } from "fs"
 
-const logReleasePath = "logs/logRelease.json"
+const logReleasePath = "changelogs/logRelease.json"
 const logRelease = JSON.parse(readFileSync(logReleasePath, "utf8"));
-const logPath = "logs/log.json"
+const logPath = "changelogs/log.json"
 const log = JSON.parse(readFileSync(logPath, "utf8"));
 
 log.push(logRelease)

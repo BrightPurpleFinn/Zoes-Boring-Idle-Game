@@ -30,7 +30,7 @@ if (patchType == -1) { process.exit() };
 
 await execAsync("git pull")
 
-const file = "changeLogs/temp.json";
+const file = "changelogs/temp.json";
 
 const initialFile = `{
   "finished": false,
@@ -47,7 +47,7 @@ function validateLog(log) {
   return log.patchTitle.length >= 5 && log.changes.length >= 1;
 }
 
-let logReleasePath = 'changeLogs/logRelease.json';
+let logReleasePath = 'changelogs/logRelease.json';
 if (!existsSync(logReleasePath)) {
   writeFileSync(logReleasePath, `[]`, "utf8");
 }
