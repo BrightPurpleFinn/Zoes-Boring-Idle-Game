@@ -31,7 +31,6 @@ function config(set, get) {
       const { gold, updateGold } = useGoldStore.getState();
 
       if (!upgrade.cost.every((x) => {
-      if (!upgrade.cost.every((x) => {
         if (x[0] == "Gold") return gold >= x[1];
         throw Error(`Unknown Currency in upgrade ${upgrade.name}`);
       })) return;
