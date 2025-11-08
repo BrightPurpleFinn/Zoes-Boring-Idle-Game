@@ -3,7 +3,7 @@ import { newUpgrades } from "../utils/upgradeUtils.js";
 import { useGoldStore } from "./goldStore.js";
 
 const name = "upgradeStore";
-export const version = 1;
+export const version = 2;
 
 /**
  * Array of upgrades as tuples:
@@ -19,11 +19,9 @@ const upgrades = newUpgrades([
   ["Other big upgrade", "Squares your gold per second", [["Gold", 1000]], ["gold"], 1]
 ]);
 
-console.log();
-
 const initialState = {
   upgrades: upgrades,
-  availableUpgrades: upgrades.map((x) => {return x.index;}),
+  availableUpgrades: upgrades.map((x) => { return x.index; }),
   broughtUpgrades: []
 };
 
@@ -32,15 +30,15 @@ function config(set, get) {
     ...initialState,
     buyUpgrade: (index) => {
       const s = get();
-      
+
       const upgrade = s.upgrades.find((x) => x.index == index);
       if (!upgrade) {
         throw Error(`Unknown error occured`);
       }
 
-      const {gold, deductGold} = useGoldStore.getState();
+      const { gold, deductGold } = useGoldStore.getState();
 
-      if(!upgrade.cost.every((x) => {
+      if (!upgrade.cost.every((x) => {
         if (x[0] == "Gold") return gold >= x[1];
         throw Error(`Unknown Currency in upgrade ${upgrade.name}`);
       })) return;
@@ -52,8 +50,8 @@ function config(set, get) {
       if (s.broughtUpgrades.includes(index)) {
         throw Error(`Upgrade ${index} already present in broughtUpgrades`);
       }
-      set({ broughtUpgrades: [...s.broughtUpgrades, index]});
-      set({ availableUpgrades: s.availableUpgrades.filter(x => {return x != index;}) });
+      set({ broughtUpgrades: [...s.broughtUpgrades, index] });
+      set({ availableUpgrades: s.availableUpgrades.filter(x => { return x != index; }) });
     },
     getAvailableUpgrades: () => {
       const s = get();
@@ -61,6 +59,7 @@ function config(set, get) {
         return s.availableUpgrades.includes(x.index);
       });
     },
+    setAvailableUpgrades: (x) => set({ availableUpgrades: x }),
     isUpgradeActivated: (index) => {
       const s = get();
       return s.broughtUpgrades.includes(index);
@@ -77,11 +76,14 @@ export function migrate(persistedState, persistedVersion) {
 function rehydrateHandler(state) {
   if (!state) return;
   const s = state.getState ? state.getState() : state;
-  console.log(`rehydration: ${s}`);
+  const availableUpgrades = upgrades.map((x) => { return x.index; }).filter((x) => !s.broughtUpgrades.includes(x));
+  s.setAvailableUpgrades(availableUpgrades);
 }
 
 export function partialize(state) {
-  return state;
+  return {
+    broughtUpgrades: state.broughtUpgrades
+  };
 }
 
 export const useUpgradeStore = createBaseStore(
