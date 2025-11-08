@@ -1,5 +1,3 @@
-import { getPackageVersions, packagesMatch } from "./getPackageVersions.mjs";
-
 let failed = false;
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
