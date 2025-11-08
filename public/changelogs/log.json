@@ -1,2 +1,20 @@
 [
+  {
+    "releaseName": "Patch Notes Visible",
+    "version": "0.3.0",
+    "date": "2025-11-08T23:41:37.633Z",
+    "patches": {
+      "fix": [],
+      "minor": [
+        {
+          "patchTitle": "Patch Notes Implemented!",
+          "changes": [
+            "Now added a new menu that can be viewed via a button (that's temporarily just in the middle of the screen), which displays patch notes",
+            "Functionality enabled for showing changes of 3 primary categories: fix, minor, major, which each relate to a number in the game version"
+          ]
+        }
+      ],
+      "major": []
+    }
+  }
 ]
