@@ -1,1 +1,0 @@
-[{"patchTitle":"let logReleaseJSON = JSON.parse(readFileSync(logReleasePath));","changes":["change one","change two"],"patchType":"fix","version":"0.2.52"},{"patchTitle":"let logReleaseJSON = JSON.parse(readFileSync(logReleasePath));","changes":["change one","change two"],"patchType":"fix","version":"0.2.53"}]
