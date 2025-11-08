@@ -24,7 +24,6 @@ if (failed) {
 
 function releaseChecks() {
   if (!existsSync(logReleasePath)) {
-    console.log(readdirSync("/home/runner/work/Zoes-Boring-Idle-Game/Zoes-Boring-Idle-Game/"))
     console.error("No Release change log file");
     failed = true;
   } 
