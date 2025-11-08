@@ -47,7 +47,7 @@ function validateLog(log) {
   return log.patchTitle.length >= 5 && log.changes.length >= 1;
 }
 
-let logReleasePath = 'changeLogs/changeLogRelease.json';
+let logReleasePath = 'changeLogs/logRelease.json';
 if (!existsSync(logReleasePath)) {
   writeFileSync(logReleasePath, `[]`, "utf8");
 }
