@@ -18,17 +18,15 @@ const initialState = {
 const second = 1000;
 
 const name = "goldStore";
-export const version = 2;
+export const version = 3;
 
 function config(set, get) {
   return {
     ...initialState,
-    mineGold: () => set((s) => ({ gold: s.gold + s.goldPerClick })),
-    addGold: (x) => set((s) => ({ gold: s.gold + x })),
     upgradePickaxe: () => {
       const s = get();
       if (s.gold >= s.pickaxeCost) {
-        s.deductGold(s.pickaxeCost);
+        s.updateGold( - s.pickaxeCost);
         s.pickaxeLevelInc();
         s.pickaxeCostCalc();
       }
@@ -36,36 +34,36 @@ function config(set, get) {
     upgradeMiner: () => {
       const s = get();
       if (s.gold >= s.minerCost) {
-        s.deductGold(s.minerCost);
+        s.updateGold( - s.minerCost);
         s.minerLevelInc();
         s.minerCostCalc();
       }
     },
     goldRateBase: () => get().minerLevel * 1,
     minerCostCalc: () => {
-      const pow = 0.05;
-      const base = 10;
+      const minerPow = 0.05;
+      const minerBase = 10;
       set((s) => ({
-        minerCost: Math.trunc(base ** (1 + pow * s.minerLevel)),
+        minerCost: Math.trunc(minerBase ** (1 + minerPow * s.minerLevel)),
       }));
     },
     pickaxeCostCalc: () => {
-      const pow = 0.05;
-      const base = 10;
+      const pickaxePow = 0.05;
+      const pickaxeBase = 10;
       set((s) => ({
-        pickaxeCost: Math.trunc(base ** (1 + pow * s.pickaxeLevel)),
+        pickaxeCost: Math.trunc(pickaxeBase ** (1 + pickaxePow * s.pickaxeLevel)),
       }));
     },
     minerLevelInc: () => set((s) => ({ minerLevel: s.minerLevel + 1 })),
     pickaxeLevelInc: () => set((s) => ({ pickaxeLevel: s.pickaxeLevel + 1 })),
-    deductGold: (gold) => set((s) => ({ gold: s.gold - gold })),
+    updateGold: (gold) => set((s) => ({ gold: s.gold + gold })),
     goldPerClickBase: () => get().pickaxeLevel * 1,
     tick: (delta) => {
       const s = get();
       const seconds = delta / second;
       const goldPerClick = s.goldPerClickBase();
 
-      const {isUpgradeActivated} = useUpgradeStore.getState();
+      const { isUpgradeActivated } = useUpgradeStore.getState();
 
       const goldRateBase = s.goldRateBase();
       const goldRateMulti = isUpgradeActivated(0) ? 2 : 1;
@@ -96,24 +94,22 @@ function rehydrateHandler(state) {
   const elapsedSeconds = (now - s.lastAction) / second;
   const earned = s.goldRateBase() * elapsedSeconds;
 
-  setTimeout(() => {
-    if (elapsedSeconds > 0) {
-      toast.success(
-        `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
-      );
-    }
-    s.pickaxeCostCalc(s.pickaxeLevel);
-    s.minerCostCalc(s.minerLevel);
-    s.addGold(earned);
-  }, 0);
+  if (elapsedSeconds > 0) {
+    toast.success(
+      `Offline for ${elapsedSeconds.toFixed(1)}s, earned ${earned.toFixed(1)} gold`
+    );
+  }
+  s.pickaxeCostCalc(s.pickaxeLevel);
+  s.minerCostCalc(s.minerLevel);
+  s.addGold(earned);
 }
 
-export function partialize(state) {
+export function partialize({ gold, minerLevel, pickaxeLevel, lastAction }) {
   return {
-    gold: state.gold,
-    minerLevel: state.minerLevel,
-    pickaxeLevel: state.pickaxeLevel,
-    lastAction: state.lastAction,
+    gold: gold,
+    minerLevel: minerLevel,
+    pickaxeLevel: pickaxeLevel,
+    lastAction: lastAction,
   };
 }
 
