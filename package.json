@@ -19,7 +19,8 @@
     "eject": "react-scripts eject",
     "test:auto": "set CI=false && jest --watchAll --silent --runInBand",
     "lint": "eslint -f pretty && echo ✅ ESLint fixed all files successfully!",
-    "coverage": "jest --coverage --coverageReporters=json && cls && node scripts/filterCoverage.js"
+    "coverage": "jest --coverage --coverageReporters=json && cls && node scripts/filterCoverage.js",
+    "storeVersion": "node scripts/checkStoreVersions.mjs"
   },
   "browserslist": {
     "production": [
