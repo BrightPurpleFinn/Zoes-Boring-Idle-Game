@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync, unlinkSync } from "fs"
 import inquirer from "inquirer";
 
-const logReleasePath = "changelogs/logRelease.json"
+const logReleasePath = "public/changelogs/logRelease.json"
 const logRelease = JSON.parse(readFileSync(logReleasePath, "utf8"));
-const logPath = "changelogs/log.json"
+const logPath = "public/changelogs/log.json"
 const log = JSON.parse(readFileSync(logPath, "utf8"));
 
 const {releaseName} = await inquirer.prompt([{

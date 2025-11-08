@@ -1,0 +1,60 @@
+.changelog-container {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.changelog-header {
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.changelog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 1;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.changelog-updates-container {
+    
+}
+
+.changelog-update-container {
+
+}
+
+.changelog-update-date {
+ align-content: end;
+ padding-bottom: 3px;
+ font-weight: bold;
+ font-size: 18px;
+}
+
+.changelog-update-name {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.changelog-update-header {
+    display:flex;
+    gap: 5px;
+    padding-bottom: 10px;
+}
+
+.changelog-update-patches-header {
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.changelog-update-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
