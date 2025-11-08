@@ -4,8 +4,8 @@ let failed = false;
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
 const targetBranch = JSON.parse(readFileSync(eventPath, 'utf-8')).pull_request.base.ref;
-const logReleasePath = "changelogs/logRelease.json";
-const logPath = "changelogs/log.json"
+const logReleasePath = "../changelogs/logRelease.json";
+const logPath = "../changelogs/log.json"
 
 switch(targetBranch) {
   case "main":
