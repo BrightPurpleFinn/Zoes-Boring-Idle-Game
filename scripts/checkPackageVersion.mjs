@@ -1,3 +1,5 @@
+import { existsSync } from "fs";
+
 let failed = false;
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
