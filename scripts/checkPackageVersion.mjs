@@ -24,7 +24,7 @@ if (failed) {
 
 function releaseChecks() {
   if (!existsSync(logReleasePath)) {
-    console.log(readdirSync(__dirname))
+    console.log(readdirSync(import.meta.dirname))
     console.error("No Realease change log file");
     failed = true;
   } 
