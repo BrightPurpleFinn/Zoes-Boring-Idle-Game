@@ -3,7 +3,7 @@ import { newUpgrades } from "../utils/upgradeUtils.js";
 import { useGoldStore } from "./goldStore.js";
 
 const name = "upgradeStore";
-export const version = 1;
+export const version = 2;
 
 const upgrades = newUpgrades([
   // name, description, [[currency, cost]], REDUNDNET?, index
@@ -22,6 +22,7 @@ function config(set, get) {
     buyUpgrade: (index) => {
       const s = get();
 
+
       const upgrade = s.upgrades.find((x) => x.index == index);
       if (!upgrade) {
         throw Error(`Unknown error occured`);
@@ -29,6 +30,7 @@ function config(set, get) {
 
       const { gold, updateGold } = useGoldStore.getState();
 
+      if (!upgrade.cost.every((x) => {
       if (!upgrade.cost.every((x) => {
         if (x[0] == "Gold") return gold >= x[1];
         throw Error(`Unknown Currency in upgrade ${upgrade.name}`);
@@ -50,6 +52,7 @@ function config(set, get) {
       const s = get();
       return s.upgrades.filter((x) => !s.broughtUpgrades.includes(x.index));
     },
+    setAvailableUpgrades: (x) => set({ availableUpgrades: x }),
     isUpgradeActivated: (index) => {
       const s = get();
       return s.broughtUpgrades.includes(index);
@@ -66,7 +69,8 @@ export function migrate(persistedState, persistedVersion) {
 function rehydrateHandler(state) {
   if (!state) return;
   const s = state.getState ? state.getState() : state;
-  console.log(`rehydration: ${s}`);
+  const availableUpgrades = upgrades.map((x) => { return x.index; }).filter((x) => !s.broughtUpgrades.includes(x));
+  s.setAvailableUpgrades(availableUpgrades);
 }
 
 export function partialize({ broughtUpgrades }) {
