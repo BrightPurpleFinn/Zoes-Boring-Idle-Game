@@ -1,9 +1,9 @@
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 
 let failed = false;
 
 const eventPath = process.env.GITHUB_EVENT_PATH;
-const targetBranch = JSON.parse(fs.readFileSync(eventPath, 'utf-8')).pullrequest.base.ref;
+const targetBranch = JSON.parse(readFileSync(eventPath, 'utf-8')).pullrequest.base.ref;
 const logReleasePath = "logs/logRelease.json";
 const logPath = "logs/log.json"
 
