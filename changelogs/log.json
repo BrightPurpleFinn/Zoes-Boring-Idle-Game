@@ -1,0 +1,20 @@
+[
+  [
+    {
+      "patchTitle": "BUG FIXES",
+      "changes": [
+        "Fixed bug with upgrades not being saved"
+      ],
+      "patchType": "fix",
+      "version": "0.2.54"
+    },
+    {
+      "patchTitle": "let's see",
+      "changes": [
+        "change one"
+      ],
+      "patchType": "fix",
+      "version": "0.2.55"
+    }
+  ]
+]
