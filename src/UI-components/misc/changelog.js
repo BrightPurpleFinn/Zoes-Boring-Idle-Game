@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../css/misc/changelog.css'
+import '../../css/misc/changelog.css';
 import ReactDOM from "react-dom";
 
 function ChangeLog({ children, onClose }) {
@@ -14,7 +14,12 @@ function ChangeLog({ children, onClose }) {
   );
 }
 
-const logs = await fetch('./changelogs/log.json').then(response => response.json())
+async function loadLogs() {
+  const response = await fetch('./changelogs/log.json');
+  return response.json();
+}
+
+const logs = loadLogs();
 
 export default function Changelog() {
   const [open, setOpen] = useState(false);
@@ -41,7 +46,7 @@ export default function Changelog() {
                         <div className="changelog-update-patches-major-body">
                           {
                             x.patches.major.map((x) => {
-                              return <div>{x}</div>
+                              return <div>{x}</div>;
                             })
                           }
                         </div>
@@ -51,7 +56,7 @@ export default function Changelog() {
                         <div className="changelog-update-patches-minor-body">
                           {
                             x.patches.minor.map((x) => {
-                              return <div>{x}</div>
+                              return <div>{x}</div>;
                             })
                           }
                         </div>
@@ -61,14 +66,14 @@ export default function Changelog() {
                         <div className="changelog-update-patches-fix-body">
                           {
                             x.patches.fix.map((x) => {
-                              return <div>{x}</div>
+                              return <div>{x}</div>;
                             })
                           }
                         </div>
                       </div>
                     </div>
                   </div>
-                )
+                );
               })
             }
           </div>

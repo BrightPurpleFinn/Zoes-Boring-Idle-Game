@@ -8,7 +8,7 @@ import VersionBadge from "./UI-components/version";
 import '../src/css/app.css';
 import { useGoldStore } from "./stores/goldStore";
 import { useUpgradeStore } from "./stores/upgradesStore";
-import Changelog from "./UI-components/misc/changelog";
+import Changelog from "./UI-components/misc/changelog.js";
 
 export default function App() {
   const { reset: resetGold } = useGoldStore();
