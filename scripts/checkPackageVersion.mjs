@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 
 let failed = false;
 
@@ -24,6 +24,7 @@ if (failed) {
 
 function releaseChecks() {
   if (!existsSync(logReleasePath)) {
+    console.log(readdirSync(__dirname))
     console.error("No Realease change log file");
     failed = true;
   } 
