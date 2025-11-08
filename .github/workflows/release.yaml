@@ -2,7 +2,9 @@ name: Release
 
 on:
   pull_request:
-    branches: release
+    branches:
+    - release
+    - main
 
 permissions:
   contents: write
@@ -31,6 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-
       - name: Run version check
         run: node scripts/checkPackageVersion.mjs
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
