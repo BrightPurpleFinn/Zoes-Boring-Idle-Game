@@ -1,34 +1,37 @@
-import fs from "fs";
-import path from "path";
-import { execSync } from 'child_process';
+import { existsSync, readFileSync, readdirSync } from "fs";
 
 let failed = false;
-const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
-const baseBranch = process.env.GITHUB_BASE_REF || 'origin/main';
+const eventPath = process.env.GITHUB_EVENT_PATH;
+const targetBranch = JSON.parse(readFileSync(eventPath, 'utf-8')).pull_request.base.ref;
+const logReleasePath = "changelogs/logRelease.json";
+const logPath = "changelogs/log.json"
 
-const newVersion = packageJson.version
-
-const changedFiles = execSync(`git diff --name-only ${baseBranch}...HEAD -- package.json`, { encoding: 'utf8' })
-  .split('\n')
-
-
-if (!changedFiles.includes("package.json")) {
-  failed = true;
-} else {
-  try {
-    const oldVersion = JSON.parse(execSync(`git show ${baseBranch}:package.json`, { encoding: 'utf8' })).version;
-    if (oldVersion == newVersion) {
-      failed = true;
-    }
-  } catch (e) {
-    throw e;
-  }
+switch(targetBranch) {
+  case "main":
+    mainChecks();
+    break;
+  case "release":
+    releaseChecks();
+    break;
 }
 
 if (failed) {
-  console.error(`PR check failed: Please bump the package version from ${newVersion}.`);
   process.exit(1);
 } else {
-  console.log(`Version is bumped. Check passes.`)
+  console.log(`Check passes.`)
+}
+
+function releaseChecks() {
+  if (!existsSync(logReleasePath)) {
+    console.error("No Release change log file");
+    failed = true;
+  } 
+}
+
+function mainChecks() {
+  if (existsSync(logReleasePath)) {
+    console.error("Change log file has not been merged");
+    failed = true;
+  } 
 }
