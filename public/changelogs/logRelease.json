@@ -1,5 +1,13 @@
 [
   {
+    "patchTitle": "Fixed changelog timestamp",
+    "changes": [
+      "Fixed changelog date stamp to correctly display date of patch"
+    ],
+    "patchType": "fix",
+    "version": "0.3.3"
+  },
+  {
     "patchTitle": "Reformatted upgrade objects",
     "changes": [
       "Removed 'stores' property from upgrades, as they're now redundent",
