@@ -11,8 +11,8 @@ const mapProperties = (x) => {
     description: x[1],
     cost: x[2],
     index: x[3]
-  }
-}
+  };
+};
 
 function checkType(value, type) {
   if (type.type == "array") {
