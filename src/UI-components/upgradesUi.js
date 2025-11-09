@@ -21,7 +21,7 @@ function UpgradeButtons({ upgrades, buyUpgrade, _className, _children, ..._props
 }
 
 function upgradeButton(upgrade, buyUpgrade) {
-  if (!upgrade) { console.log("help"); return; }
+  if (!upgrade) { return; }
   return (
     <div className="upgrade-button-container">
       <div className="upgrade-button-header">{upgrade.name}</div>
