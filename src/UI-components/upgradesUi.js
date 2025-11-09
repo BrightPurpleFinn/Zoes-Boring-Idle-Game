@@ -1,5 +1,5 @@
 // src/components/GoldUI.js
-import React, { useEffect } from "react";
+import React from "react";
 import { useUpgradeStore } from "../stores/upgradesStore";
 import '../css/upgradesUi.css';
 

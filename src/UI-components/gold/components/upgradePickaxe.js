@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useGoldStore } from "../../../stores/goldStore";
 import HoldButton from "../../button/holdButton";
 
 export default function UpgradePickaxe() {
-  useEffect(() => {
-    console.log("Component committed to the DOM");
-  });
 
   const upgradePickaxe = useGoldStore(state => state.upgradePickaxe);
   const pickaxeLevel = useGoldStore(state => state.pickaxeLevel);

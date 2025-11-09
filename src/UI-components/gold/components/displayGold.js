@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useGoldStore } from "../../../stores/goldStore";
 
 export default function DisplayGold() {

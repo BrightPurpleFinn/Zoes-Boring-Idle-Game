@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import GoldUI from '../../src/UI-components/gold/goldUi';
 import React from "react";
-import userEvent from "@testing-library/user-event";
 
 test("rendered App contains goldUI component", () => {
   const { container } = render(<GoldUI />);
