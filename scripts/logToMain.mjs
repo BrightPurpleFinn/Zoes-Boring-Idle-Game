@@ -22,8 +22,7 @@ newRecord.date = new Date();
 newRecord.patches = {fix: [], minor: [], major: []}
 
 for (let x of logRelease) {
-    const patchRecord = {patchTitle: x.patchTitle, changes: x.changes}
-    newRecord.patches[x.patchType].push(patchRecord)
+    newRecord.patches[x.patchType].push(x.changes)
 }
 
 log.push(newRecord)
