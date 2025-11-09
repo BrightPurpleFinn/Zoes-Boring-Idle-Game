@@ -1,11 +1,15 @@
 [
   {
     "releaseName": "Patch Notes Visible",
-    "version": "0.3.1",
+    "version": "0.3.4",
     "date": "2025-11-09T00:23:56.546Z",
     "patches": {
       "fix": [
-        "Fixed game breaking bug that occured due to failures loading the changelogs"
+        "Fixed game breaking bug that occured due to failures loading the changelogs",
+        "Fixed changelog date stamp to correctly display date of patch",
+        "Removed 'stores' property from upgrades, as they're now redundent",
+        "Updated upgradeUtils to have a mapper function to map a list to a upgrade object to help make it easier to diagnose problems",
+        "Extracted UI components specifically for the gold UI elements so that there's no redundent complete re-rendering of all gold UI elements"
       ],
       "minor": [
         "Now added a new menu that can be viewed via a button (that's temporarily just in the middle of the screen), which displays patch notes",

@@ -1,18 +1,19 @@
 // IdleGame.jsx
 import GameLoop from "./gameLoop";
 import { Toaster } from "react-hot-toast";
-import GoldUI from "./UI-components/goldUi";
+import GoldUI from "./UI-components/gold/goldUi.js";
 import UpgradesUI from "./UI-components/upgradesUi";
-import React from "react";
+import React, { useEffect } from "react";
 import VersionBadge from "./UI-components/version";
 import '../src/css/app.css';
-import { useGoldStore } from "./stores/goldStore";
-import { useUpgradeStore } from "./stores/upgradesStore";
 import Changelog from "./UI-components/misc/changelog.js";
+import ResetButton from './UI-components/button/resetButton.js';
 
 export default function App() {
-  const { reset: resetGold } = useGoldStore();
-  const { reset: resetUpgrades } = useUpgradeStore();
+  useEffect(() => {
+    console.log("Component committed to the DOM");
+  });
+
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <div className="game-container">
@@ -23,7 +24,7 @@ export default function App() {
           <UpgradesUI />
         </div>
       </div>
-      <button className="reset" onClick={() => { resetGold(); resetUpgrades(); }}>RESET</button>
+      <ResetButton />
       <Toaster position="top-right" containerClassName="toasterDiv" />
       <GameLoop />
       <VersionBadge />
