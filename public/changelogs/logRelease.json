@@ -1,0 +1,11 @@
+[
+  {
+    "patchTitle": "Reformatted upgrade objects",
+    "changes": [
+      "Removed 'stores' property from upgrades, as they're now redundent",
+      "Updated upgradeUtils to have a mapper function to map a list to a upgrade object to help make it easier to diagnose problems"
+    ],
+    "patchType": "fix",
+    "version": "0.3.2"
+  }
+]

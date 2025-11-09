@@ -2,9 +2,17 @@ const properties = [
   ["name", "string"], 
   ["description", "string"],
   ["cost", {type: "array", size: 2}],
-  ["stores", {type: "array"}],
   ["index", "number"]
 ];
+
+const mapProperties = (x) => {
+  return {
+    name: x[0],
+    description: x[1],
+    cost: x[2],
+    index: x[3]
+  }
+}
 
 function checkType(value, type) {
   if (type.type == "array") {
@@ -37,13 +45,7 @@ function validateUpgrade(obj) {
 }
 
 function newUpgrade(x) {
-  const upgrade = {
-    name: x[0],
-    description: x[1],
-    cost: x[2],
-    stores: x[3],
-    index: x[4]
-  };
+  const upgrade = mapProperties(x);
   try {
     validateUpgrade(upgrade);
   } catch (e) {

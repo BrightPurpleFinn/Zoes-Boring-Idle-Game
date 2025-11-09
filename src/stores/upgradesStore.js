@@ -7,8 +7,8 @@ export const version = 3;
 
 const upgrades = newUpgrades([
   // name, description, [[currency, cost]], REDUNDNET?, index
-  ["Big Upgrade no. One!", "Doubles your gold per second", [["Gold", 100]], ["gold"], 0],
-  ["Other big upgrade", "Squares your gold per second", [["Gold", 1000]], ["gold"], 1]
+  ["Big Upgrade no. One!", "Doubles your gold per second", [["Gold", 100]],  0],
+  ["Other big upgrade", "Squares your gold per second", [["Gold", 1000]],  1]
 ]);
 
 const initialState = {
