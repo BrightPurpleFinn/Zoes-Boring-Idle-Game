@@ -18,7 +18,7 @@ const initialState = {
 const second = 1000;
 
 const name = "goldStore";
-export const version = 3;
+export const version = 4;
 
 function config(set, get) {
   return {

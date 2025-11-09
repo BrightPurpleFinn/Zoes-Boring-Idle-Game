@@ -3,7 +3,7 @@ import { newUpgrades } from "../utils/upgradeUtils.js";
 import { useGoldStore } from "./goldStore.js";
 
 const name = "upgradeStore";
-export const version = 3;
+export const version = 4;
 
 const upgrades = newUpgrades([
   // name, description, [[currency, cost]], REDUNDNET?, index
