@@ -101,7 +101,7 @@ function rehydrateHandler(state) {
   }
   s.pickaxeCostCalc(s.pickaxeLevel);
   s.minerCostCalc(s.minerLevel);
-  s.addGold(earned);
+  s.updateGold(earned);
 }
 
 export function partialize({ gold, minerLevel, pickaxeLevel, lastAction }) {
