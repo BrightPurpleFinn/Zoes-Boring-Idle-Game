@@ -60,7 +60,7 @@ export default function Changelog() {
                   <div className="changelog-update-container">
                     <div className="changelog-update-header">
                       <div className="changelog-update-name">{x.releaseName}</div>
-                      <div className="changelog-update-date">({x.date}) - {x.version}</div>
+                      <div className="changelog-update-date">( {(new Date(x.date)).toLocaleDateString()} ) - v{x.version}</div>
                     </div>
                     <div className="changelog-update-body">
                       {x.patches.major.length != 0 && <div className="changelog-update-patches-major-container">

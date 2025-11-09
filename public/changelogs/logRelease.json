@@ -1,0 +1,10 @@
+[
+  {
+    "patchTitle": "Fixed changelog timestamp",
+    "changes": [
+      "Fixed changelog date stamp to correctly display date of patch"
+    ],
+    "patchType": "fix",
+    "version": "0.3.3"
+  }
+]
