@@ -15,5 +15,13 @@
     ],
     "patchType": "fix",
     "version": "0.3.2"
+  },
+  {
+    "patchTitle": "Refactored UI Components to Reduce Re-Rendering",
+    "changes": [
+      "Extracted UI components specifically for the gold UI elements so that there's no redundent complete re-rendering of all gold UI elements"
+    ],
+    "patchType": "fix",
+    "version": "0.3.4"
   }
 ]
